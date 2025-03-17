@@ -22,17 +22,19 @@ public static class ServiceExtensions
     {
         var settings = services.GetOptions<MongoDbSettings>(nameof(MongoDbSettings));
         if (settings == null || string.IsNullOrEmpty(settings.ConnectionString))
-            throw new ArgumentNullException("MongoDbSettings is not configured.");
+            throw new ArgumentNullException("DatabaseSettings is not configured.");
 
         var databaseName = settings.DatabaseName;
         var mongoDbConnectionString = settings.ConnectionString + "/" + databaseName + "?authSource=admin";
+
         return mongoDbConnectionString;
     }
 
     // Config Mongo Client to be able to connect to MongoDB
     public static void ConfigureMongoDbClient(this IServiceCollection services)
     {
-        services.AddSingleton<IMongoClient>(new MongoClient(GetMongoConnectionString(services)))
+        services.AddSingleton<IMongoClient>(
+                new MongoClient(GetMongoConnectionString(services)))
             .AddScoped(x => x.GetService<IMongoClient>()?.StartSession());
     }
 

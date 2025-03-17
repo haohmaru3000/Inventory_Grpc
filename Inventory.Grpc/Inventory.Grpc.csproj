@@ -7,7 +7,7 @@
    </PropertyGroup>
 
    <ItemGroup>
-      <PackageReference Include="Grpc.AspNetCore" Version="2.64.0"/>
+      <PackageReference Include="Grpc.AspNetCore" Version="2.70.0" />
       <PackageReference Include="MongoDB.Driver" Version="3.2.1" />
       <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
       <PackageReference Include="Serilog.Enrichers.Environment" Version="3.0.1" />
@@ -32,6 +32,20 @@
      <Reference Include="Shared">
        <HintPath>..\..\aspnet_microservices\src\BuildingBlocks\Shared\obj\Debug\net9.0\Shared.dll</HintPath>
      </Reference>
+   </ItemGroup>
+   
+   <ItemGroup>
+      <None Remove="Protos\stock.proto" />
+      <Protobuf Include="Protos\stock.proto">
+         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+         <GrpcServices>Server</GrpcServices>
+         <Access>Public</Access>
+         <ProtoCompile>True</ProtoCompile>
+         <ProtoRoot></ProtoRoot>
+         <CompileOutputs>True</CompileOutputs>
+         <OutputDir>obj\Debug/net9.0/</OutputDir>
+         <Generator>MSBuild:Compile</Generator>
+      </Protobuf>
    </ItemGroup>
 
 </Project>
